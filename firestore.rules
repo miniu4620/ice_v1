@@ -1,0 +1,41 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    // Scores collection for speed leaderboard
+    match /scores/{scoreId} {
+      allow read: if true;
+      allow create: if request.resource.data.nickname is string 
+                    && request.resource.data.nickname.size() > 0 
+                    && request.resource.data.nickname.size() <= 25
+                    && request.resource.data.stage is int
+                    && request.resource.data.stage >= 1
+                    && request.resource.data.stage <= 5
+                    && request.resource.data.timeMs is int
+                    && request.resource.data.timeMs > 0
+                    && request.resource.data.moves is int;
+      allow delete: if true;
+      allow update: if false;
+    }
+    
+    // Guestbook collection for comments and warm cheer
+    match /guestbook/{entryId} {
+      allow read: if true;
+      allow create: if request.resource.data.nickname is string
+                    && request.resource.data.nickname.size() > 0
+                    && request.resource.data.nickname.size() <= 25
+                    && request.resource.data.message is string
+                    && request.resource.data.message.size() > 0
+                    && request.resource.data.message.size() <= 500;
+      allow delete: if true;
+      allow update: if false;
+    }
+
+    // Participants log collection
+    match /participants/{participantId} {
+      allow read: if true;
+      allow create, update: if request.resource.data.nickname is string
+                            && request.resource.data.nickname.size() > 0;
+      allow delete: if true;
+    }
+  }
+}

@@ -1,0 +1,6 @@
+{
+  "name": "미니유공방 아이스브레이킹 카드뒤집기 챌린지",
+  "description": "미니유공방 교육생들을 위한 활력 뿜뿜 5단계 카드뒤집기 스피드 랭킹 & 따뜻한 방명록",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
